@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>选车指南 - 专业的汽车选购平台</title>
+    <!-- 引入Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- 配置Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#36CFC9',
+                        neutral: '#F5F7FA',
+                        dark: '#1D2129',
+                        light: '#FFFFFF'
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .transition-custom {
+                transition: all 0.3s ease;
+            }
+        }
+    </style>
+    <style>
+        /* 基础动画定义 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeIn {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        /* 平滑滚动 */
+        html {
+            scroll-behavior: smooth;
+        }
+        /* 自定义滚动条 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a1a1a1;
+        }
+    </style>
+</head>
+<body class="font-inter bg-neutral text-dark antialiased">
+    <!-- 导航栏 -->
+    <header id="navbar" class="fixed w-full top-0 z-50 transition-custom bg-white/95 shadow-sm">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#" class="flex items-center space-x-2">
+                <i class="fa fa-car text-primary text-2xl"></i>
+                <span class="text-xl font-bold text-primary">选车指南</span>
+            </a>
+            
+            <!-- 桌面端导航 -->
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="#" class="font-medium text-primary border-b-2 border-primary pb-1">首页</a>
+                <a href="#shopping-guide" class="font-medium hover:text-primary transition-custom">选购指南</a>
+                <a href="#basics" class="font-medium hover:text-primary transition-custom">汽车基础</a>
+                <a href="#safety" class="font-medium hover:text-primary transition-custom">安全知识</a>
+                <a href="#driving-test" class="font-medium hover:text-primary transition-custom">驾考知识</a>
+            </nav>
+            
+            <!-- 移动端菜单按钮 -->
+            <button id="menuBtn" class="md:hidden text-dark text-xl">
+                <i class="fa fa-bars"></i>
+            </button>
+        </div>
+        
+        <!-- 移动端导航菜单 -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-t animate-fadeIn">
+            <div class="container mx-auto px-4 py-3 flex flex-col space-y-4">
+                <a href="#" class="font-medium text-primary py-2">首页</a>
+                <a href="#shopping-guide" class="font-medium hover:text-primary transition-custom py-2">选购指南</a>
+                <a href="#basics" class="font-medium hover:text-primary transition-custom py-2">汽车基础</a>
+                <a href="#safety" class="font-medium hover:text-primary transition-custom py-2">安全知识</a>
+                <a href="#driving-test" class="font-medium hover:text-primary transition-custom py-2">驾考知识</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <main class="pt-16">
+        <!-- 英雄区/Banner -->
+        <section class="relative bg-gradient-to-r from-primary to-primary/80 text-white py-16 md:py-24">
+            <div class="container mx-auto px-4 relative z-10">
+                <div class="max-w-2xl animate-fadeIn" style="animation-delay: 0.1s;">
+                    <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold leading-tight text-shadow mb-4">
+                        选车不迷路<br>轻松找到理想座驾
+                    </h1>
+                    <p class="text-[clamp(1rem,2vw,1.25rem)] text-white/90 mb-8 max-w-xl">
+                        专业的汽车选购指南，帮你避开套路，了解汽车知识，做出最适合自己的购车决策。
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#shopping-guide" class="bg-white text-primary font-medium px-6 py-3 rounded-lg hover:bg-opacity-90 transition-custom shadow-lg">
+                            开始选车 <i class="fa fa-arrow-right ml-2"></i>
+                        </a>
+                        <a href="#basics" class="bg-transparent border-2 border-white text-white font-medium px-6 py-3 rounded-lg hover:bg-white/10 transition-custom">
+                            了解基础知识
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- 背景装饰 -->
+            <div class="absolute top-0 right-0 w-full h-full overflow-hidden opacity-10">
+                <i class="fa fa-car absolute -right-10 -top-10 text-[300px] transform rotate-12"></i>
+            </div>
+        </section>
+
+        <!-- 广告位1：首页Banner下方 -->
+        <section class="py-6 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="bg-neutral rounded-xl p-4 md:p-0 flex items-center justify-center h-20 md:h-24 border border-gray-200">
+                    <!-- 广告占位 -->
+                    <div class="text-center text-gray-400 text-sm">
+                        <p>广告位：728×90（桌面）/300×250（移动）</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 快捷功能入口 -->
+        <section class="py-12 bg-white">
+            <div class="container mx-auto px-4">
+                <h2 class="text-[clamp(1.5rem,3vw,2rem)] font-bold text-center mb-12">快速导航</h2>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- 功能卡片1 -->
+                    <a href="#shopping-guide" class="bg-neutral rounded-xl p-6 hover:shadow-md transition-custom group">
+                        <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-custom">
+                            <i class="fa fa-shopping-cart text-primary text-2xl"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">选购指南</h3>
+                        <p class="text-gray-600 text-sm">避开购车陷阱，掌握选车技巧，买到性价比最高的车</p>
+                    </a>
+                    
+                    <!-- 功能卡片2 -->
+                    <a href="#budget-selector" class="bg-neutral rounded-xl p-6 hover:shadow-md transition-custom group">
+                        <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-custom">
+                            <i class="fa fa-money text-primary text-2xl"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">预算选车</h3>
+                        <p class="text-gray-600 text-sm">根据你的预算，快速筛选最适合的车型推荐</p>
+                    </a>
+                    
+                    <!-- 功能卡片3 -->
+                    <a href="#safety" class="bg-neutral rounded-xl p-6 hover:shadow-md transition-custom group">
+                        <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-custom">
+                            <i class="fa fa-shield text-primary text-2xl"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">安全知识</h3>
+                        <p class="text-gray-600 text-sm">了解汽车安全配置，掌握驾驶安全技巧</p>
+                    </a>
+                    
+                    <!-- 功能卡片4 -->
+                    <a href="#driving-test" class="bg-neutral rounded-xl p-6 hover:shadow-md transition-custom group">
+                        <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-custom">
+                            <i class="fa fa-graduation-cap text-primary text-2xl"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">驾考指南</h3>
+                        <p class="text-gray-600 text-sm">各科目考试要点，助你顺利通过驾考</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 汽车选购模块（重点） -->
+        <section id="shopping-guide" class="py-16 bg-neutral">
+            <div class="container mx-auto px-4">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-4">汽车选购指南</h2>
+                    <p class="text-gray-600">选车是一个需要综合考虑多方面因素的过程，我们为你整理了最实用的选购指南，让你少走弯路，避开套路</p>
+                </div>
+
+                <!-- 广告位2：内容页侧边栏（仅桌面显示） -->
+                <div class="flex flex-col lg:flex-row gap-8">
+                    <div class="lg:w-2/3">
+                        <!-- 选购流程图 -->
+                        <div class="bg-white rounded-xl shadow-sm p-6 mb-8">
+                            <h3 class="text-xl font-semibold mb-6 flex items-center">
+                                <i class="fa fa-sitemap text-primary mr-2"></i> 选车流程
+                            </h3>
+                            
+                            <div class="relative">
+                                <!-- 步骤线 -->
+                                <div class="hidden md:block absolute left-5 top-0 bottom-0 w-0.5 bg-gray-200"></div>
+                                
+                                <!-- 步骤1 -->
+                                <div class="relative pl-14 md:pl-16 pb-8 md:pb-12 last:pb-0">
+                                    <div class="hidden md:block absolute left-0 top-1 w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center">1</div>
+                                    <div class="md:hidden absolute left-0 top-1 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-sm">1</div>
+                                    <h4 class="text-lg font-medium mb-2">确定预算范围</h4>
+                                    <p class="text-gray-600">根据自己的经济状况，确定一个合理的购车预算，包括首付款、贷款（如有）、保险、购置税等费用。</p>
+                                </div>
+                                
+                                <!-- 步骤2 -->
+                                <div class="relative pl-14 md:pl-16 pb-8 md:pb-12 last:pb-0">
+                                    <div class="hidden md:block absolute left-0 top-1 w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center">2</div>
+                                    <div class="md:hidden absolute left-0 top-1 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-sm">2</div>
+                                    <h4 class="text-lg font-medium mb-2">明确使用需求</h4>
+                                    <p class="text-gray-600">考虑主要用途（家用/商用/越野）、载人数量、日常行驶路况、油耗敏感度等因素。</p>
+                                </div>
+                                
+                                <!-- 步骤3 -->
+                                <div class="relative pl-14 md:pl-16 pb-8 md:pb-12 last:pb-0">
+                                    <div class="hidden md:block absolute left-0 top-1 w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center">3</div>
+                                    <div class="md:hidden absolute left-0 top-1 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-sm">3</div>
+                                    <h4 class="text-lg font-medium mb-2">筛选车型</h4>
+                                    <p class="text-gray-600">根据预算和需求，筛选出3-5款合适的车型进行对比，包括价格、配置、空间、动力、油耗等。</p>
+                                </div>
+                                
+                                <!-- 步骤4 -->
+                                <div class="relative pl-14 md:pl-16 pb-8 md:pb-12 last:pb-0">
+                                    <div class="hidden md:block absolute left-0 top-1 w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center">4</div>
+                                    <div class="md:hidden absolute left-0 top-1 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-sm">4</div>
+                                    <h4 class="text-lg font-medium mb-2">实地看车试驾</h4>
+                                    <p class="text-gray-600">到4S店实地看车，体验车内空间、做工用料，进行试驾体验动力、操控、舒适性等。</p>
+                                </div>
+                                
+                                <!-- 步骤5 -->
+                                <div class="relative pl-14 md:pl-16">
+                                    <div class="hidden md:block absolute left-0 top-1 w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center">5</div>
+                                    <div class="md:hidden absolute left-0 top-1 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-sm">5</div>
+                                    <h4 class="text-lg font-medium mb-2">价格谈判与购买</h4>
+                                    <p class="text-gray-600">了解市场行情，进行价格谈判，注意合同细节，避免附加消费陷阱。</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 预算筛选器 -->
+                        <div id="budget-selector" class="bg-white rounded-xl shadow-sm p-6 mb-8">
+                            <h3 class="text-xl font-semibold mb-6 flex items-center">
+                                <i class="fa fa-filter text-primary mr-2"></i> 按预算选车
+                            </h3>
+                            
+                            <div class="mb-6">
+                                <label for="budgetRange" class="block text-gray-700 mb-2">选择预算范围：<span id="budgetValue">15万元</span></label>
+                                <input type="range" id="budgetRange" min="5" max="100" step="5" value="15" 
+                                    class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary">
+                                <div class="flex justify-between text-xs text-gray-500 mt-1">
+                                    <span>5万</span>
+                                    <span>50万</span>
+                                    <span>100万+</span>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-6">
+                                <label class="block text-gray-700 mb-3">主要用途：</label>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-custom">
+                                        <input type="radio" name="usage" value="family" class="mr-2 accent-primary">
+                                        <span>家庭日常使用</span>
+                                    </label>
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-custom">
+                                        <input type="radio" name="usage" value="business" class="mr-2 accent-primary">
+                                        <span>商务接待</span>
+                                    </label>
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-custom">
+                                        <input type="radio" name="usage" value="offroad" class="mr-2 accent-primary">
+                                        <span>越野探险</span>
+                                    </label>
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-custom">
+                                        <input type="radio" name="usage" value="sport" class="mr-2 accent-primary">
+                                        <span>运动驾驶</span>
+                                    </label>
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-custom">
+                                        <input type="radio" name="usage" value="economy" class="mr-2 accent-primary">
+                                        <span>经济省油</span>
+                                    </label>
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-custom">
+                                        <input type="radio" name="usage" value="other" class="mr-2 accent-primary" checked>
+                                        <span>其他用途</span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <button id="searchCars" class="w-full bg-primary text-white font-medium py-3 rounded-lg hover:bg-primary/90 transition-custom">
+                                查找推荐车型
+                            </button>
+                            
+                            <!-- 推荐结果 -->
+                            <div id="carRecommendations" class="mt-6 hidden">
+                                <h4 class="font-medium mb-4">为您推荐以下车型：</h4>
+                                <div class="space-y-4">
+                                    <!-- 推荐车型1 -->
+                                    <div class="border border-gray-200 rounded-lg p-4 hover:shadow-sm transition-custom">
+                                        <div class="flex flex-col sm:flex-row gap-4">
+                                            <div class="sm:w-1/4 bg-neutral rounded overflow-hidden">
+                                                <img src="https://picsum.photos/200/150?random=1" alt="车型图片" class="w-full h-24 sm:h-full object-cover">
+                                            </div>
+                                            <div class="sm:w-3/4">
+                                                <h5 class="font-semibold">车型名称 A</h5>
+                                                <p class="text-sm text-gray-600 mb-2">价格区间：12-18万元 | 车型：紧凑型轿车</p>
+                                                <p class="text-sm text-gray-600">推荐理由：油耗低，空间适中，适合家庭使用，性价比高。</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 推荐车型2 -->
+                                    <div class="border border-gray-200 rounded-lg p-4 hover:shadow-sm transition-custom">
+                                        <div class="flex flex-col sm:flex-row gap-4">
+                                            <div class="sm:w-1/4 bg-neutral rounded overflow-hidden">
+                                                <img src="https://picsum.photos/200/150?random=2" alt="车型图片" class="w-full h-24 sm:h-full object-cover">
+                                            </div>
+                                            <div class="sm:w-3/4">
+                                                <h5 class="font-semibold">车型名称 B</h5>
+                                                <p class="text-sm text-gray-600 mb-2">价格区间：14-20万元 | 车型：SUV</p>
+                                                <p class="text-sm text-gray-600">推荐理由：通过性好，空间宽敞，适合多种路况。</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 广告位3：文章内容中间 -->
+                        <div class="bg-neutral rounded-xl p-4 mb-8 border border-gray-200">
+                            <div class="text-center text-gray-400 text-sm py-6">
+                                <p>广告位：自适应宽度矩形广告</p>
+                            </div>
+                        </div>
+
+                        <!-- 购车套路揭秘 -->
+                        <div class="bg-white rounded-xl shadow-sm p-6">
+                            <h3 class="text-xl font-semibold mb-6 flex items-center">
+                                <i class="fa fa-exclamation-triangle text-amber-500 mr-2"></i> 购车常见套路与避坑技巧
+                            </h3>
+                            
+                            <div class="space-y-6">
+                                <div class="flex gap-4">
+                                    <div class="flex-shrink-0 w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center text-amber-500">
+                                        <i class="fa fa-tag"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-medium text-lg mb-1">低价吸引，捆绑销售</h4>
+                                        <p class="text-gray-600">很多4S店会以远低于市场价的价格吸引客户到店，然后通过强制购买装潢、保险等方式赚回利润。</p>
+                                        <p class="text-sm text-primary mt-1">避坑：提前问清楚是否有附加条件，合同中明确写出所有费用。</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex gap-4">
+                                    <div class="flex-shrink-0 w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center text-amber-500">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-medium text-lg mb-1">库存车冒充新车</h4>
+                                        <p class="text-gray-600">部分经销商会将存放超过6个月的库存车当作新车销售，这类车可能存在电瓶亏电、轮胎老化等问题。</p>
+                                        <p class="text-sm text-primary mt-1">避坑：检查车辆生产日期（一般在车门柱或发动机舱内），超过3个月的要谨慎。</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex gap-4">
+                                    <div class="flex-shrink-0 w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center text-amber-500">
+                                        <i class="fa fa-credit-card"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-medium text-lg mb-1">贷款购车陷阱</h4>
+                                        <p class="text-gray-600">贷款购车时可能会收取高额手续费、GPS费等，实际总成本可能比全款购车高很多。</p>
+                                        <p class="text-sm text-primary mt-1">避坑：计算总费用对比，选择厂家金融可能更划算，问清楚所有隐性收费。</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex gap-4">
+                                    <div class="flex-shrink-0 w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center text-amber-500">
+                                        <i class="fa fa-wrench"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-medium text-lg mb-1">售后服务捆绑</h4>
+                                        <p class="text-gray-600">强制要求在4S店进行保养，否则不提供保修，或者夸大车辆问题诱导消费。</p>
+                                        <p class="text-sm text-primary mt-1">避坑：了解《汽车三包规定》，保留所有维修记录和凭证。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 侧边栏 -->
+                    <div class="lg:w-1/3">
+                        <!-- 广告位2：侧边栏 -->
+                        <div class="hidden lg:block bg-white rounded-xl p-4 mb-6 border border-gray-200">
+                            <div class="text-center text-gray-400 text-sm py-16">
+                                <p>广告位：300×600（仅桌面显示）</p>
+                            </div>
+                        </div>
+                        
+                        <!-- 新车vs二手车对比 -->
+                        <div class="bg-white rounded-xl shadow-sm p-6 mb-6">
+                            <h3 class="text-lg font-semibold mb-4">新车 vs 二手车</h3>
+                            
+                            <div class="space-y-4">
+                                <div>
+                                    <h4 class="font-medium text-primary mb-2">新车优势</h4>
+                                    <ul class="space-y-2 text-sm">
+                                        <li class="flex items-start">
+                                            <i class="fa fa-check text-green-500 mt-1 mr-2"></i>
+                                            <span>质量有保障，享受完整保修</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <i class="fa fa-check text-green-500 mt-1 mr-2"></i>
+                                            <span>最新的安全配置和技术</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <i class="fa fa-check text-green-500 mt-1 mr-2"></i>
+                                            <span>没有前任车主使用痕迹</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                
+                                <div>
+                                    <h4 class="font-medium text-amber-500 mb-2">二手车优势</h4>
+                                    <ul class="space-y-2 text-sm">
+                                        <li class="flex items-start">
+                                            <i class="fa fa-check text-green-500 mt-1 mr-2"></i>
+                                            <span>价格更低，贬值损失小</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <i class="fa fa-check text-green-500 mt-1 mr-2"></i>
+                                            <span>保险费用相对较低</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <i class="fa fa-check text-green-500 mt-1 mr-2"></i>
+                                            <span>适合新手练车，磕碰不心疼</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 打赏卡片 -->
+                        <div class="bg-white rounded-xl shadow-sm p-6 border-t-4 border-primary">
+                            <h3 class="text-lg font-semibold mb-3">支持本站发展</h3>
+                            <p class="text-sm text-gray-600 mb-4">如果本站内容对你有帮助，欢迎打赏支持我们持续创作更多优质内容</p>
+                            
+                            <div class="flex justify-center gap-6 mb-4">
+                                <div class="text-center">
+                                    <div class="w-24 h-24 bg-neutral rounded-lg flex items-center justify-center mb-2 mx-auto">
+                                        <i class="fa fa-weixin text-green-500 text-3xl"></i>
+                                    </div>
+                                    <p class="text-xs text-gray-500">微信支付</p>
+                                </div>
+                                <div class="text-center">
+                                    <div class="w-24 h-24 bg-neutral rounded-lg flex items-center justify-center mb-2 mx-auto">
+                                        <i class="fa fa-credit-card text-blue-500 text-3xl"></i>
+                                    </div>
+                                    <p class="text-xs text-gray-500">支付宝</p>
+                                </div>
+                            </div>
+                            
+                            <p class="text-xs text-gray-400 text-center">感谢您的支持与理解</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 其他模块入口 -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-4">更多汽车相关知识</h2>
+                    <p class="text-gray-600">了解汽车基础知识、安全知识和驾考指南，成为更懂车的消费者</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- 汽车基础知识 -->
+                    <div id="basics" class="bg-neutral rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-custom">
+                        <div class="h-48 overflow-hidden">
+                            <img src="https://picsum.photos/600/400?random=10" alt="汽车基础知识" class="w-full h-full object-cover hover:scale-105 transition-custom duration-500">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-3 flex items-center">
+                                <i class="fa fa-cogs text-primary mr-2"></i> 汽车基础知识
+                            </h3>
+                            <p class="text-gray-600 mb-4">了解汽车主要零部件、核心技术和专业术语，读懂汽车配置表，不再被销售忽悠。</p>
+                            <a href="#" class="inline-flex items-center text-primary font-medium hover:underline">
+                                查看更多 <i class="fa fa-angle-right ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- 汽车安全知识 -->
+                    <div id="safety" class="bg-neutral rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-custom">
+                        <div class="h-48 overflow-hidden">
+                            <img src="https://picsum.photos/600/400?random=11" alt="汽车安全知识" class="w-full h-full object-cover hover:scale-105 transition-custom duration-500">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-3 flex items-center">
+                                <i class="fa fa-shield text-primary mr-2"></i> 汽车安全知识
+                            </h3>
+                            <p class="text-gray-600 mb-4">学习汽车安全配置知识、日常驾驶安全技巧和事故处理流程，保障行车安全。</p>
+                            <a href="#" class="inline-flex items-center text-primary font-medium hover:underline">
+                                查看更多 <i class="fa fa-angle-right ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- 驾考知识 -->
+                    <div id="driving-test" class="bg-neutral rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-custom">
+                        <div class="h-48 overflow-hidden">
+                            <img src="https://picsum.photos/600/400?random=12" alt="驾考知识" class="w-full h-full object-cover hover:scale-105 transition-custom duration-500">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-3 flex items-center">
+                                <i class="fa fa-graduation-cap text-primary mr-2"></i> 驾考知识
+                            </h3>
+                            <p class="text-gray-600 mb-4">各科目考试要点、常见错题解析和实用驾驶技巧，助你顺利通过驾考。</p>
+                            <a href="#" class="inline-flex items-center text-primary font-medium hover:underline">
+                                查看更多 <i class="fa fa-angle-right ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 广告位4：页脚上方 -->
+        <section class="py-6 bg-neutral">
+            <div class="container mx-auto px-4">
+                <div class="bg-white rounded-xl p-4 flex items-center justify-center h-16 border border-gray-200">
+                    <!-- 广告占位 -->
+                    <div class="text-center text-gray-400 text-sm">
+                        <p>广告位：468×60 全宽横幅广告</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark text-white pt-12 pb-6">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fa fa-car text-primary text-2xl"></i>
+                        <span class="text-xl font-bold">选车指南</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">专业的汽车选购平台，为您提供客观、实用的汽车知识和选购建议。</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-primary transition-custom">
+                            <i class="fa fa-weibo"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-custom">
+                            <i class="fa fa-weixin"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-custom">
+                            <i class="fa fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">快速链接</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-primary transition-custom">首页</a></li>
+                        <li><a href="#shopping-guide" class="hover:text-primary transition-custom">选购指南</a></li>
+                        <li><a href="#basics" class="hover:text-primary transition-custom">汽车基础</a></li>
+                        <li><a href="#safety" class="hover:text-primary transition-custom">安全知识</a></li>
+                        <li><a href="#driving-test" class="hover:text-primary transition-custom">驾考知识</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">热门车型</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-primary transition-custom">紧凑型轿车</a></li>
+                        <li><a href="#" class="hover:text-primary transition-custom">中型SUV</a></li>
+                        <li><a href="#" class="hover:text-primary transition-custom">新能源汽车</a></li>
+                        <li><a href="#" class="hover:text-primary transition-custom">豪华品牌</a></li>
+                        <li><a href="#" class="hover:text-primary transition-custom">MPV车型</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">支持与反馈</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-primary transition-custom">关于我们</a></li>
+                        <li><a href="#" class="hover:text-primary transition-custom">联系方式</a></li>
+                        <li><a href="#" class="hover:text-primary transition-custom">意见反馈</a></li>
+                        <li><a href="#" class="hover:text-primary transition-custom">隐私政策</a></li>
+                        <li>
+                            <a href="#donate" class="hover:text-primary transition-custom flex items-center mt-4">
+                                <i class="fa fa-heart text-red-500 mr-2"></i> 支持本站
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- 打赏入口 -->
+            <div id="donate" class="border-t border-gray-800 pt-6 pb-4">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-500 text-sm mb-4 md:mb-0">如果您觉得本站内容有价值，欢迎打赏支持我们的发展</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-lg text-sm transition-custom flex items-center">
+                            <i class="fa fa-weixin mr-2"></i> 微信打赏
+                        </a>
+                        <a href="#" class="bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-lg text-sm transition-custom flex items-center">
+                            <i class="fa fa-credit-card mr-2"></i> 支付宝打赏
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-6 text-center text-gray-500 text-sm">
+                <p>© 2023 选车指南 版权所有 | 本站仅供学习交流使用</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // 移动端菜单切换
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            // 切换图标
+            const icon = menuBtn.querySelector('i');
+            if (icon.classList.contains('fa-bars')) {
+                icon.classList.replace('fa-bars', 'fa-times');
+            } else {
+                icon.classList.replace('fa-times', 'fa-bars');
+            }
+        });
+        
+        // 导航栏滚动效果
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('py-2', 'shadow');
+                navbar.classList.remove('py-3');
+            } else {
+                navbar.classList.add('py-3');
+                navbar.classList.remove('py-2', 'shadow');
+            }
+        });
+        
+        // 预算滑块
+        const budgetRange = document.getElementById('budgetRange');
+        const budgetValue = document.getElementById('budgetValue');
+        
+        budgetRange.addEventListener('input', () => {
+            budgetValue.textContent = `${budgetRange.value}万元`;
+        });
+        
+        // 查找推荐车型按钮
+        const searchCarsBtn = document.getElementById('searchCars');
+        const carRecommendations = document.getElementById('carRecommendations');
+        
+        searchCarsBtn.addEventListener('click', () => {
+            carRecommendations.classList.toggle('hidden');
+            // 如果显示了结果，滚动到结果位置
+            if (!carRecommendations.classList.contains('hidden')) {
+                carRecommendations.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+        
+        // 页面加载完成后的动画
+        document.addEventListener('DOMContentLoaded', () => {
+            // 给各个部分添加渐入动画
+            const sections = document.querySelectorAll('section');
+            sections.forEach((section, index) => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(20px)';
+                section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                
+                setTimeout(() => {
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }, 100 + (index * 100));
+            });
+        });
+    </script>
+</body>
+</html>
