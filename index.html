@@ -38,6 +38,10 @@
             .transition-custom {
                 transition: all 0.3s ease;
             }
+            /* 隐藏广告位 */
+            .ad-container {
+                display: none !important;
+            }
         }
     </style>
     <style>
@@ -66,6 +70,42 @@
         }
         ::-webkit-scrollbar-thumb:hover {
             background: #a1a1a1;
+        }
+        /* 二维码容器样式 */
+        .qr-code-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .qr-code-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 300px;
+            width: 100%;
+        }
+        .qr-code-image {
+            width: 100%;
+            height: auto;
+            margin-bottom: 15px;
+        }
+        .close-btn {
+            background-color: #165DFF;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -135,7 +175,7 @@
         </section>
 
         <!-- 广告位1：首页Banner下方 -->
-        <section class="py-6 bg-white">
+        <section class="py-6 bg-white ad-container">
             <div class="container mx-auto px-4">
                 <div class="bg-neutral rounded-xl p-4 md:p-0 flex items-center justify-center h-20 md:h-24 border border-gray-200">
                     <!-- 广告占位 -->
@@ -341,7 +381,7 @@
                         </div>
 
                         <!-- 广告位3：文章内容中间 -->
-                        <div class="bg-neutral rounded-xl p-4 mb-8 border border-gray-200">
+                        <div class="bg-neutral rounded-xl p-4 mb-8 border border-gray-200 ad-container">
                             <div class="text-center text-gray-400 text-sm py-6">
                                 <p>广告位：自适应宽度矩形广告</p>
                             </div>
@@ -404,7 +444,7 @@
                     <!-- 侧边栏 -->
                     <div class="lg:w-1/3">
                         <!-- 广告位2：侧边栏 -->
-                        <div class="hidden lg:block bg-white rounded-xl p-4 mb-6 border border-gray-200">
+                        <div class="hidden lg:block bg-white rounded-xl p-4 mb-6 border border-gray-200 ad-container">
                             <div class="text-center text-gray-400 text-sm py-16">
                                 <p>广告位：300×600（仅桌面显示）</p>
                             </div>
@@ -453,19 +493,19 @@
                             </div>
                         </div>
                         
-                        <!-- 打赏卡片 -->
+                        <!-- 打赏卡片 - 点击展示二维码 -->
                         <div class="bg-white rounded-xl shadow-sm p-6 border-t-4 border-primary">
                             <h3 class="text-lg font-semibold mb-3">支持本站发展</h3>
                             <p class="text-sm text-gray-600 mb-4">如果本站内容对你有帮助，欢迎打赏支持我们持续创作更多优质内容</p>
                             
                             <div class="flex justify-center gap-6 mb-4">
-                                <div class="text-center">
+                                <div class="text-center cursor-pointer" id="wechatDonate">
                                     <div class="w-24 h-24 bg-neutral rounded-lg flex items-center justify-center mb-2 mx-auto">
                                         <i class="fa fa-weixin text-green-500 text-3xl"></i>
                                     </div>
                                     <p class="text-xs text-gray-500">微信支付</p>
                                 </div>
-                                <div class="text-center">
+                                <div class="text-center cursor-pointer" id="alipayDonate">
                                     <div class="w-24 h-24 bg-neutral rounded-lg flex items-center justify-center mb-2 mx-auto">
                                         <i class="fa fa-credit-card text-blue-500 text-3xl"></i>
                                     </div>
@@ -541,7 +581,7 @@
         </section>
 
         <!-- 广告位4：页脚上方 -->
-        <section class="py-6 bg-neutral">
+        <section class="py-6 bg-neutral ad-container">
             <div class="container mx-auto px-4">
                 <div class="bg-white rounded-xl p-4 flex items-center justify-center h-16 border border-gray-200">
                     <!-- 广告占位 -->
@@ -614,15 +654,15 @@
                 </div>
             </div>
             
-            <!-- 打赏入口 -->
+            <!-- 打赏入口 - 点击展示二维码 -->
             <div id="donate" class="border-t border-gray-800 pt-6 pb-4">
                 <div class="flex flex-col md:flex-row justify-between items-center">
                     <p class="text-gray-500 text-sm mb-4 md:mb-0">如果您觉得本站内容有价值，欢迎打赏支持我们的发展</p>
                     <div class="flex space-x-4">
-                        <a href="#" class="bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-lg text-sm transition-custom flex items-center">
+                        <a href="#" id="footerWechatDonate" class="bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-lg text-sm transition-custom flex items-center">
                             <i class="fa fa-weixin mr-2"></i> 微信打赏
                         </a>
-                        <a href="#" class="bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-lg text-sm transition-custom flex items-center">
+                        <a href="#" id="footerAlipayDonate" class="bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-lg text-sm transition-custom flex items-center">
                             <i class="fa fa-credit-card mr-2"></i> 支付宝打赏
                         </a>
                     </div>
@@ -634,6 +674,24 @@
             </div>
         </div>
     </footer>
+
+    <!-- 微信打赏二维码模态框 -->
+    <div id="wechatQrModal" class="qr-code-modal">
+        <div class="qr-code-content">
+            <h3 class="font-semibold mb-2">微信扫码支持</h3>
+            <img src="https://p9-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/40ad1432b595432db49207690f7848a4.jpg~tplv-a9rns2rl98-24:720:720.image?rk3s=1fb89129&x-expires=1758612731&x-signature=EXMWqCoAJophw6OpBlrfySDQ0Ec%3D" alt="微信打赏二维码" class="qr-code-image">
+            <button class="close-btn" data-modal="wechatQrModal">关闭</button>
+        </div>
+    </div>
+
+    <!-- 支付宝打赏二维码模态框 -->
+    <div id="alipayQrModal" class="qr-code-modal">
+        <div class="qr-code-content">
+            <h3 class="font-semibold mb-2">支付宝扫码支持</h3>
+            <img src="https://p9-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/037c86b103e04d759b6a06d390fc3885.jpg~tplv-a9rns2rl98-24:720:720.image?rk3s=1fb89129&x-expires=1758612731&x-signature=UgbJj7ZPkwXiMpqxIKSOvZjmw9I%3D" alt="支付宝打赏二维码" class="qr-code-image">
+            <button class="close-btn" data-modal="alipayQrModal">关闭</button>
+        </div>
+    </div>
 
     <!-- JavaScript -->
     <script>
@@ -681,6 +739,59 @@
             // 如果显示了结果，滚动到结果位置
             if (!carRecommendations.classList.contains('hidden')) {
                 carRecommendations.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+        
+        // 打赏二维码功能
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.style.display = 'flex';
+            // 防止背景滚动
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.style.display = 'none';
+            // 恢复背景滚动
+            document.body.style.overflow = 'auto';
+        }
+        
+        // 微信打赏按钮
+        document.getElementById('wechatDonate').addEventListener('click', () => {
+            openModal('wechatQrModal');
+        });
+        
+        // 支付宝打赏按钮
+        document.getElementById('alipayDonate').addEventListener('click', () => {
+            openModal('alipayQrModal');
+        });
+        
+        // 页脚微信打赏
+        document.getElementById('footerWechatDonate').addEventListener('click', (e) => {
+            e.preventDefault();
+            openModal('wechatQrModal');
+        });
+        
+        // 页脚支付宝打赏
+        document.getElementById('footerAlipayDonate').addEventListener('click', (e) => {
+            e.preventDefault();
+            openModal('alipayQrModal');
+        });
+        
+        // 关闭按钮
+        document.querySelectorAll('.close-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const modalId = button.getAttribute('data-modal');
+                closeModal(modalId);
+            });
+        });
+        
+        // 点击模态框外部关闭
+        window.addEventListener('click', (e) => {
+            if (e.target.classList.contains('qr-code-modal')) {
+                e.target.style.display = 'none';
+                document.body.style.overflow = 'auto';
             }
         });
         
